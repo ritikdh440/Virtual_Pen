@@ -29,7 +29,7 @@ class edge(object):
         
     def change_perspect(self,frame):
         v = edge.vertex
-        pts1 = np.float32([[v[0][0],v[0][1]],[v[1][0],v[1][1]],[v[2][0],v[2][1]],[v[3][0],v[3][1]]])
+        pts1 = np.float32([[v[2][0],v[2][1]],[v[3][0],v[3][1]],[v[0][0],v[0][1]],[v[1][0],v[1][1]]])
         pts2 = np.float32([[0,0],[1,0],[1,1],[0,1]])
         pts2 = pts2*np.float32(edge.output)
         mat = cv2.getPerspectiveTransform(pts1,pts2)

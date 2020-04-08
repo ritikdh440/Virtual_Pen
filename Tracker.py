@@ -1,5 +1,5 @@
 import cv2
-import lib_track as tracker
+from lib_track import tracker
 from lib_edge import edge
 def getframe():
      while True:
@@ -18,11 +18,14 @@ if not(cam.isOpened()):
 else:
     sample = getframe()
     edge = edge(sample)
+    
     edge.getVertex()
 
     while True:
         ret,frame = cam.read()
         frame = edge.change_perspect(frame)
+        track = tracker(frame)
+        frame = track.preprocess() 
         cv2.imshow('preview',frame)
         if cv2.waitKey(1) != -1:
             break
