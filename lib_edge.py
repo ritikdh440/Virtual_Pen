@@ -16,8 +16,9 @@ class edge(object):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
         
-        
+    #Mouse Click Event to point the edges   
     def mouseClick(self,event,x,y,flags,param):
+        
         if edge.count == 4:
             return
         
@@ -27,6 +28,10 @@ class edge(object):
             edge.vertex.append([x,y])
             edge.count += 1
         
+        if event == cv2.EVENT_RBUTTONDOWN:
+            edge.vertex -= 1
+            edge.vertex.pop()    
+
     def change_perspect(self,frame):
         v = edge.vertex
         pts1 = np.float32([[v[2][0],v[2][1]],[v[3][0],v[3][1]],[v[0][0],v[0][1]],[v[1][0],v[1][1]]])
