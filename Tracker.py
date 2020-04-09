@@ -20,15 +20,23 @@ else:
     edge = edge(sample)
     
     edge.getVertex()
-
+    mat = []
     while True:
         ret,frame = cam.read()
         frame = edge.change_perspect(frame)
         track = tracker(frame)
-        frame = track.preprocess() 
-        cv2.imshow('preview',frame)
-        if cv2.waitKey(1) != -1:
+        cv2.imshow('Original',frame)
+        temp = track.preprocess()
+        if temp is not None:
+            mat.append(temp)
+        track.draw(mat) 
+        cv2.imshow('Altered',frame)
+
+        key = cv2.waitKey(1)
+        if key == 27:
             break
+        elif key != -1:
+            mat = []
     
     cam.release()
     cv2.destroyAllWindows()

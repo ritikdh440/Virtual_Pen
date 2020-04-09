@@ -23,7 +23,7 @@ class edge(object):
             return
         
         if event == cv2.EVENT_LBUTTONDOWN:
-            cv2.circle(self.img,(x,y),4,[0,0,255],thickness=4)
+            cv2.circle(self.img,(x,y),4,[0,0,255],thickness=-1)
             cv2.imshow('Select Vertex' , self.img)
             edge.vertex.append([x,y])
             edge.count += 1
