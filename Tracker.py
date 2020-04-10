@@ -2,12 +2,11 @@ import cv2
 import numpy as np
 from lib_track import tracker
 from lib_edge import edge
-fframe= []
+
 def init():
-    global fframe
     ret,fframe = cam.read()
     fframe = edge.change_perspect(fframe)
-    # fframe = cv2.cvtColor(fframe,cv2.COLOR_BGR2GRAY)
+    return fframe
 
 def getframe():
      while True:
@@ -25,10 +24,9 @@ if not(cam.isOpened()):
 else:
     sample = getframe()
     edge = edge(sample)
-    track = tracker()
-    
     edge.getVertex()
-    init()
+    track = tracker(init())
+    
     while True:
         #Initializations
         ret,frame = cam.read()

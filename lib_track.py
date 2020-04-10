@@ -4,8 +4,9 @@ class tracker(object):
     pimg = []
     val = []
     fimg = []
-    def __init__(self):
+    def __init__(self,bgimage):
         self.erase()
+        self.background = bgimage
 
     def preprocess(self,img):
         tracker.pimg = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
