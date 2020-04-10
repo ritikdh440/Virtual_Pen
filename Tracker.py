@@ -23,10 +23,10 @@ cam = cv2.VideoCapture(0)
 if not(cam.isOpened()):
     print("Error Accessing Camera Object")
 else:
-    mat = []
-    
     sample = getframe()
     edge = edge(sample)
+    track = tracker()
+    
     edge.getVertex()
     init()
     while True:
@@ -34,28 +34,20 @@ else:
         ret,frame = cam.read()
 
         frame = edge.change_perspect(frame)
-        
-        # sub_frame = sub(frame)
-        # sub_frame = frame
-        #track = tracker(sub_frame)
-        track = tracker()
-        temp,pimg,sobel = track.preprocess(frame)
-        
-        #Drawing Board
-        if temp is not None:
-            mat.append(temp)
-        frame = track.draw(mat,frame)
+        pimg,sobel = track.preprocess(frame)
+        dboard = track.draw()
 
         #Image Showing Stuff 
+        cv2.imshow('Perspective Changed',frame)
         cv2.imshow('Filtered',sobel)
-        cv2.imshow('Drawing Board' , frame)
-        #cv2.imshow('Subtracted',sub_frame)
+        cv2.imshow('Drawing Board' , dboard)
+
         #Closing Stuff
         key = cv2.waitKey(1)
         if key == 27:
             break
         elif key != -1:
-            mat = []
+            track.erase()
     
     cam.release()
     cv2.destroyAllWindows()

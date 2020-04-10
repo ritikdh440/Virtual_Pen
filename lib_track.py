@@ -2,8 +2,10 @@ import cv2
 import numpy as np
 class tracker(object):
     pimg = []
+    val = []
+    fimg = []
     def __init__(self):
-        pass
+        self.erase()
 
     def preprocess(self,img):
         tracker.pimg = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -11,10 +13,9 @@ class tracker(object):
         sobel = self.sobel()
         matrix = np.transpose(np.nonzero(sobel))
         if len(matrix) > 0:
-            return matrix[0],tracker.pimg,sobel
-        else:
-            return None,tracker.pimg,sobel
-
+            tracker.val.append(matrix[0])
+        return tracker.pimg,sobel
+        
     def sobel(self):
         sobelx = cv2.Sobel(tracker.pimg,cv2.CV_16S,1,0)
         sobely = cv2.Sobel(tracker.pimg,cv2.CV_16S,0,1)
@@ -22,10 +23,18 @@ class tracker(object):
         sobel[sobel <= 150] = 0
         return sobel
     
-    def draw(self,matrix,frame):
-        if matrix is not None:
-            ln = len(matrix)
-            for x in range(0,ln-1):
-                frame = cv2.line(frame,(matrix[x][1],matrix[x][0]), (matrix[x+1][1],matrix[x+1][0]) , [70,70,200],thickness=10)
-                #cv2.circle(self.img,(matrix[x][1],matrix[x][0]),10,[100,100,200],thickness=-1)
-            return frame
+    def draw(self):
+        i = len(tracker.val)
+        if i:
+            i -= 1
+            if i != 0:
+                cv2.line(tracker.fimg,(tracker.val[i-1][1],tracker.val[i-1][0]), (tracker.val[i][1],tracker.val[i][0]) , [70,70,200],thickness=10)
+            else:
+                cv2.circle(tracker.fimg,(tracker.val[i][1],tracker.val[i][0]),10,[100,100,200],thickness=-1)
+
+        return tracker.fimg
+
+    def erase(self):
+        tracker.fimg = np.zeros((480,720,3),dtype=np.uint8)
+        tracker.fimg.fill(255)
+        tracker.val = []
