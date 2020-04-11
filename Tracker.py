@@ -31,13 +31,12 @@ else:
         ret,frame = cam.read()
 
         frame = edge.change_perspect(frame)
-        pimg,obj,contour = track.preprocess(frame)
+        pimg,obj = track.preprocess(frame)
         dboard = track.draw()
 
         #Image Showing Stuff 
         cv2.imshow('Perspective Changed',frame)
         cv2.imshow('Filtered',obj)
-        cv2.imshow('Contour',contour)
         cv2.imshow('Drawing Board' , dboard)
 
         #Closing Stuff
