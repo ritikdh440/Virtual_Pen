@@ -35,8 +35,7 @@ else:
         dboard = track.draw()
 
         #Image Showing Stuff 
-        cv2.imshow('Object' , obj)
-
+        #cv2.imshow('Object' , obj)
         cv2.imshow('Drawing Board' , dboard)
 
         #Closing Stuff
