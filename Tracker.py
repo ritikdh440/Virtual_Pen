@@ -31,18 +31,20 @@ else:
         ret,frame = cam.read()
 
         frame = edge.change_perspect(frame)
-        pimg,obj = track.preprocess(frame)
+        obj = track.preprocess(frame)
         dboard = track.draw()
 
         #Image Showing Stuff 
-        cv2.imshow('Perspective Changed',frame)
-        cv2.imshow('Filtered',obj)
+        cv2.imshow('Object' , obj)
+
         cv2.imshow('Drawing Board' , dboard)
 
         #Closing Stuff
         key = cv2.waitKey(1)
         if key == 27:
             break
+        elif key == 32:
+            track.pause()
         elif key != -1:
             track.erase()
     
