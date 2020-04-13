@@ -34,7 +34,7 @@ class tracker(object):
 
         #Filteration
         obj = cv2.subtract(obj,self.backobj)
-        obj[obj < self.bgmax+thresh] = 0
+        obj[obj < self.bgmax] = 0
         obj[np.count_nonzero(obj) < 200] = 0
 
         return obj
