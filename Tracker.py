@@ -39,10 +39,14 @@ else:
         cv2.imshow('Object' , obj)
         cv2.imshow('Drawing Board' , dboard)
 
-        #Closing Stuff
+        #Key-based closing
         key = cv2.waitKey(1)
+        
+        #Esc Character
         if key == 27:
             break
+
+        #Space Bar
         elif key == 32:
             track.pause()
         elif key != -1:
