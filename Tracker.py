@@ -21,7 +21,6 @@ cam = cv2.VideoCapture(1)
 if not(cam.isOpened()):
     print("Error Accessing Camera Object")
 else:
-    #Taking fisrt frame as sample
     sample = getframe()
     edge = edge(sample)
     edge.getVertex()
