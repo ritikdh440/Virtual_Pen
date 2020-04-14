@@ -13,7 +13,8 @@ class tracker(object):
         
     def preprocess(self,img):
         self.img = img.copy()
-        tracker.pimg = cv2.GaussianBlur(cv2.cvtColor(img,cv2.COLOR_BGR2GRAY), (5, 5), 0)
+        # tracker.pimg = cv2.GaussianBlur(cv2.cvtColor(img,cv2.COLOR_BGR2GRAY), (5, 5), 0)
+        tracker.pimg = cv2.blur(cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) , (5,5))
         obj = self.obj_filter()
         matrix = np.transpose(np.nonzero(obj))
         if len(matrix) > 0:
@@ -44,11 +45,11 @@ class tracker(object):
         if i and self.cont:
             i -= 1
             if i != 0:
-                cv2.line(tracker.fimg,(tracker.val[i-1][1],tracker.val[i-1][0]), (tracker.val[i][1],tracker.val[i][0]) , self.color,thickness=10)
+                cv2.line(tracker.fimg,(tracker.val[i-1][1],tracker.val[i-1][0]), (tracker.val[i][1],tracker.val[i][0]) , self.color,thickness=6)
             else:
                 self.color = self.img[tracker.val[i-1][0]][tracker.val[i-1][1]]
                 self.color = tuple([int(x) for x in self.color])
-                cv2.circle(tracker.fimg,(tracker.val[i][1],tracker.val[i][0]),5,self.color,thickness=-1)
+                cv2.circle(tracker.fimg,(tracker.val[i][1],tracker.val[i][0]),3,self.color,thickness=-1)
 
         return tracker.fimg
 

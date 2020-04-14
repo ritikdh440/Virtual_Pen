@@ -16,7 +16,7 @@ def getframe():
             return frame
 
 #Main Code Starts Here
-cam = cv2.VideoCapture(1)
+cam = cv2.VideoCapture(0)
 
 if not(cam.isOpened()):
     print("Error Accessing Camera Object")
