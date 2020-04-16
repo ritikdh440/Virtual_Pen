@@ -6,9 +6,9 @@ class tracker(object):
         tracker.fimg = np.zeros_like(bgimage).astype(np.uint8)
         self.erase()
         self.background = cv2.GaussianBlur(cv2.cvtColor(bgimage,cv2.COLOR_BGR2GRAY), (5, 5), 0)
-        self.backobj = np.uint8(np.hypot(cv2.Sobel(self.background,cv2.CV_16S,1,0),cv2.Sobel(self.background,cv2.CV_16S,0,1)))
-        self.bgmean = np.mean(self.backobj)
-        self.bgmax = np.max(self.backobj)
+        self.graybg = np.uint8(np.hypot(cv2.Sobel(self.background,cv2.CV_16S,1,0),cv2.Sobel(self.background,cv2.CV_16S,0,1)))
+        self.bgmean = np.mean(self.graybg)
+        self.bgmax = np.max(self.graybg)
         self.cont = True
         
     def preprocess(self,img):
@@ -34,13 +34,15 @@ class tracker(object):
         obj = np.uint8(np.hypot(sobelx,sobely))
 
         #Filteration
-        obj = cv2.subtract(obj,self.backobj)
+        obj = cv2.subtract(obj,self.graybg)
         obj[obj < self.bgmax] = 0
         obj[np.count_nonzero(obj) < 200] = 0
-
+        print(np.bincount(obj.flatten()).argmax())
         return obj
     
     def draw(self):
+        #Tracker.val contains all the points
+
         i = len(tracker.val)
         if i and self.cont:
             i -= 1
@@ -54,6 +56,8 @@ class tracker(object):
         return tracker.fimg
 
     def erase(self):
+        #Erasing stuff
+        
         tracker.fimg.fill(255)
         tracker.val = []
         self.color = []
