@@ -15,8 +15,9 @@ def getframe():
             cv2.destroyAllWindows()
             return frame
 
-#Main Code Starts Here
-cam = cv2.VideoCapture(0)
+#Main Code Starts 
+
+cam = cv2.VideoCapture(1)
 
 if not(cam.isOpened()):
     print("Error Accessing Camera Object")
@@ -28,6 +29,7 @@ else:
 
     while True:
         #Initializations
+
         ret,frame = cam.read()
 
         frame = edge.change_perspect(frame)
@@ -35,8 +37,8 @@ else:
         dboard = track.draw()
 
         #Image Display(including process images)
-        cv2.imshow('Original',frame)
-        cv2.imshow('Object' , obj)
+        # cv2.imshow('Original',frame)
+        # cv2.imshow('Object' , obj)
         cv2.imshow('Drawing Board' , dboard)
 
         #Key-based closing
