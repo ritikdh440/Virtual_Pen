@@ -7,8 +7,6 @@ class tracker(object):
         self.erase()
         # self.background = cv2.GaussianBlur(cv2.cvtColor(bgimage,cv2.COLOR_BGR2GRAY), (5, 5), 0)
         # self.graybg = np.uint8(np.hypot(cv2.Sobel(self.background,cv2.CV_16S,1,0),cv2.Sobel(self.background,cv2.CV_16S,0,1)))
-        # self.bgmean = np.mean(self.graybg)
-        # self.bgmax = np.max(self.graybg)
         self.cont = True
         
     def preprocess(self,img):
@@ -30,16 +28,9 @@ class tracker(object):
         thresh = 20
     
         #Method-1(50%  success)        
-        # sobelx = cv2.Sobel(tracker.pimg,cv2.CV_16S,1,0)
-        # sobely = cv2.Sobel(tracker.pimg,cv2.CV_16S,0,1)
-        # obj = np.uint8(np.hypot(sobelx,sobely))
-        
-        # #Filteration
-        # obj[obj == self.graybg] = 0
-        # obj[obj < self.bgmax] = 0
-        # obj[np.count_nonzero(obj) < 200] = 0
+        #Sobel Filtration
 
-        #Metgod-2
+        #Method-2
         obj = (self.img//128)*255
         obj = cv2.bitwise_not(cv2.cvtColor(obj,cv2.COLOR_BGR2GRAY))
         return obj
@@ -61,7 +52,6 @@ class tracker(object):
 
     def erase(self):
         #Erasing stuff
-        
         tracker.fimg.fill(255)
         tracker.val=[None]*2
         self.color = []
