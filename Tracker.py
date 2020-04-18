@@ -38,7 +38,7 @@ else:
 
         #Image Display(including process images)
         # cv2.imshow('Original',frame)
-        # cv2.imshow('Object' , obj)
+        cv2.imshow('Object' , obj)
         cv2.imshow('Drawing Board' , dboard)
 
         #Key-based closing
