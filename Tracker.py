@@ -17,7 +17,7 @@ def getframe():
 
 #Main Code Starts 
 
-cam = cv2.VideoCapture(1)
+cam = cv2.VideoCapture(0)
 
 if not(cam.isOpened()):
     print("Error Accessing Camera Object")
@@ -37,7 +37,7 @@ else:
         dboard = track.draw()
 
         #Image Display(including process images)
-        # cv2.imshow('Original',frame)
+        cv2.imshow('Original',frame)
         cv2.imshow('Object' , obj)
         cv2.imshow('Drawing Board' , dboard)
 

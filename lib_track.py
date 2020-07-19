@@ -5,13 +5,13 @@ class tracker(object):
     def __init__(self,bgimage):
         tracker.drawboard = np.zeros_like(bgimage).astype(np.uint8)
         self.erase()
-        self.background = cv2.GaussianBlur(bgimage, (5, 5), 0)
+        self.background = cv2.blur(bgimage, (5, 5))
         self.background = (self.background//128) * 255
         self.cont = True
         
     def preprocess(self,img):
         self.img = img.copy()
-        self.img = cv2.GaussianBlur(self.img,(5,5),0)
+        self.img = cv2.blur(self.img,(5,5))
         obj = self.obj_filter()
         matrix = np.transpose(np.nonzero(obj))
         if len(matrix) > 0:
